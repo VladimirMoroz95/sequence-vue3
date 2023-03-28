@@ -17,11 +17,13 @@
   </div>
 </template>
 
-<script>
-  export default {
-    props: {
-      color: String
-    }
-  }
-</script>
+<script setup lang="ts">
+import { defineProps } from 'vue'
 
+defineProps({
+  color: {
+    type: String,
+    default: '#fff'
+  }
+})
+</script>

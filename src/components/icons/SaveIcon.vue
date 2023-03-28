@@ -8,11 +8,13 @@
   </div>
 </template>
 
-<script>
-export default {
-  name: "save-icon",
-  props: {
-    color: String
+<script setup lang="ts">
+import { defineProps } from 'vue'
+
+defineProps({
+  color: {
+    type: String,
+    default: '#fff'
   }
-}
+})
 </script>
