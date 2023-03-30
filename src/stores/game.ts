@@ -20,7 +20,7 @@ export const useGameStore = defineStore('game', () => {
     userId.value = gameState.currentPlayer
   }
 
-  function setUserId(id: number): void {
+  function setUserId (id: number): void {
     userId.value = id
   }
 
