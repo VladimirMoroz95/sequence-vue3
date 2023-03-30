@@ -1,6 +1,6 @@
 import { defineStore } from 'pinia'
 import { ref } from 'vue'
-import { GameState } from '@/models/game';
+import { GameState } from '@/models/game'
 
 export const useGameStore = defineStore('game', () => {
   const roomId = ref('')
