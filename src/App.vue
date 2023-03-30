@@ -1,6 +1,10 @@
 <template>
-  <h1 class="title">SEQUENCE</h1>
-  <router-view/>
+  <div class="main-wrapper">
+    <h1 class="title">SEQUENCE</h1>
+    <div>
+      <router-view/>
+    </div>
+  </div>
 </template>
 
 <script setup lang="ts">
@@ -20,5 +24,11 @@ onBeforeUnmount(() => {
 .title {
   color: $primaryColor;
   margin-bottom: 40px;
+}
+.main-wrapper {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center
 }
 </style>
