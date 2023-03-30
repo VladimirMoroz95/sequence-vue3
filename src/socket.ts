@@ -5,11 +5,17 @@ import { io } from 'socket.io-client'
 interface socketState {
   connected: boolean
   createGameEvents: any
+  roomId: string
+  gameState: any
+  playerId: number
 }
 
 export const state: socketState = reactive({
   connected: false,
-  createGameEvents: []
+  createGameEvents: [],
+  roomId: '',
+  gameState: [],
+  playerId: 0
 })
 
 const URL = 'http://localhost:8080'
@@ -29,3 +35,21 @@ socket.on('disconnect', () => {
 socket.on('createGame', (...args: any) => {
   state.createGameEvents.push(args)
 })
+
+socket.on('createGameSuccess', (roomId: string) => {
+  state.roomId = roomId
+  socket.on(`${state.roomId}`, (args: any) => {
+    if(args.state){
+      state.gameState = args.state
+      console.log('GAME STATE: ', state.gameState)
+    }else if (args.joinGameSuccess) {
+      state.playerId = args.playerId
+    }
+  })
+})
+socket.on('joinGameFailure', (error: any) => {
+  console.log("Error Join game: ", error)
+})
+
+
+
