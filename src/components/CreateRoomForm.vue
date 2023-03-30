@@ -1,9 +1,11 @@
 <template>
-  <div class="room-wrapper">
-    <h2 class="room-name">New room</h2>
+  <div>
+    <button v-if="!isCreateRoomMode" class="create-room-button empty-button" @click="isCreateRoomMode = true">Create room</button>
+    <div v-else class="room-wrapper">
+      <h2 class="room-name">New room</h2>
 
-    <h3 class="room-type-label">Select number of players:</h3>
-    <div class="room-type-wrapper">
+      <h3 class="room-type-label">Select number of players:</h3>
+      <div class="room-type-wrapper">
       <span
         v-for="type in roomTypes"
         :key="type"
@@ -12,10 +14,11 @@
       >
         {{ type }}
       </span>
-    </div>
+      </div>
 
-    <button class="success-button" @click="createRoom">Create room</button>
-    <button class="error-button" @click="$emit('close')">Cancel room</button>
+      <button class="success-button" @click="createRoom">Create room</button>
+      <button class="error-button" @click="isCreateRoomMode = false">Cancel room</button>
+    </div>
   </div>
 </template>
 
@@ -30,14 +33,15 @@ const props = defineProps({
   }
 })
 
-const roomTypes = ref(['2', '3', '4', '6', '8'])
-const activeType = ref('2')
+const isCreateRoomMode = ref(false)
+const roomTypes = ref([2, 3, 4, 6, 8])
+const activeType = ref(2)
 
 function createRoom () {
   console.log('emit crate game')
   socket.emit('createGame', {
     name: props.userName,
-    numPlayers: Number(activeType.value),
+    numPlayers: activeType.value,
     team: 'RED'
   }, (data: any) => {
     console.log('data', data)
@@ -97,4 +101,10 @@ function createRoom () {
 .success-button {
   margin: 15px 0
 }
+
+.create-room-button {
+  width: 300px;
+  margin-bottom: 20px;
+}
+
 </style>

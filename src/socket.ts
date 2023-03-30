@@ -1,20 +1,17 @@
 import { reactive } from 'vue'
 import { io } from 'socket.io-client'
+import { useGameStore } from '@/stores/game'
 
 // TODO move to models folder and remove any
 interface socketState {
   connected: boolean
   createGameEvents: any
-  roomId: string
-  gameState: any
   playerId: number
 }
 
 export const state: socketState = reactive({
   connected: false,
   createGameEvents: [],
-  roomId: '',
-  gameState: [],
   playerId: 0
 })
 
@@ -33,23 +30,22 @@ socket.on('disconnect', () => {
 })
 
 socket.on('createGame', (...args: any) => {
+  console.log('socket create game', ...args)
   state.createGameEvents.push(args)
 })
 
 socket.on('createGameSuccess', (roomId: string) => {
-  state.roomId = roomId
-  socket.on(`${state.roomId}`, (args: any) => {
-    if(args.state){
-      state.gameState = args.state
-      console.log('GAME STATE: ', state.gameState)
-    }else if (args.joinGameSuccess) {
-      state.playerId = args.playerId
+  const gameStore = useGameStore()
+
+  gameStore.setRoomId(roomId)
+  socket.on(`${gameStore.roomId}`, (args: any) => {
+    if (args.state) {
+      gameStore.parseGameState((args.state))
+    } else if (args.joinGameSuccess) {
+      gameStore.setUserId(args.playerId)
     }
   })
 })
 socket.on('joinGameFailure', (error: any) => {
-  console.log("Error Join game: ", error)
+  console.error('Error Join game: ', error)
 })
-
-
-

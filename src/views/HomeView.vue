@@ -11,21 +11,26 @@
       </transition>
     </div>
 
-    <create-room-form v-if="isCreateRoomMode" :userName="userName" @close="isCreateRoomMode = false" />
+    <create-room-form v-if="!roomId" :userName="userName" />
 
-    <button v-else class="create-room-button empty-button" @click="isCreateRoomMode = true">Create room</button>
+    <div v-else class="room-panel">
+      <h2>Room ID: {{ roomId }}</h2>
+
+    </div>
   </div>
 </template>
 
 <script lang="ts" setup>
-import { ref } from 'vue'
+import { ref, computed } from 'vue'
 import CreateRoomForm from '@/components/CreateRoomForm.vue'
 import SaveIcon from '@/components/icons/SaveIcon.vue'
+import { useGameStore } from '@/stores/game'
 
+const gameStore = useGameStore()
 const userName = ref(localStorage.getItem('userName') ||
   `Player${Math.floor(Math.random() * 100)}`)
 const isShowSaveButton = ref(false)
-const isCreateRoomMode = ref(false)
+const roomId = computed(() => gameStore.roomId)
 
 function saveNickname () {
   isShowSaveButton.value = false
@@ -62,11 +67,6 @@ function saveNickname () {
 
 .save-icon {
   cursor: pointer
-}
-
-.create-room-button {
-  width: 300px;
-  margin-bottom: 20px;
 }
 
 .fade-enter-active, .fade-leave-active {
