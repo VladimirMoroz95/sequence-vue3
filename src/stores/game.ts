@@ -23,7 +23,7 @@ export const useGameStore = defineStore('game', () => {
   }
 
   function parseGameState (gameState: GameState): void {
-    board.value = gameState.board
+    board.value = gameState.board.flat(1)
     cardDeck.value = gameState.cardDeck
     userId.value = gameState.currentPlayer
     deadCards.value = gameState.deadCards

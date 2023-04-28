@@ -5,12 +5,12 @@
     </div>
     <div class="game-board">
       <img class="card"
-           alt={{card.card}}
-           @click="clickCart(card.card)"
+           alt={{card.name.slice(1)}}
+           @click="clickCart(card.name)"
            src="/cards/overlay.png"
-           :style="{background: `url(/cards/${card.card.slice(1)}.png) no-repeat center center`, backgroundSize: 'contain'}"
+           :style="{background: `url(/cards/${card.name.slice(1)}.png) no-repeat center center`, backgroundSize: 'contain'}"
            v-for="card in boardGameCards"
-           :key="`${card.card}`"
+           :key="`${card.name}`"
       />
     </div>
   </div>

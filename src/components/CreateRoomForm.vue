@@ -23,7 +23,7 @@
         <div
           v-for="type in colorTypes"
           :key="type"
-          :class="['color-button', `color-button__${type}`, { 'color-button__active': activeColor === type }]"
+          :class="['team-button', `team-button__color${type}`, { 'team-button__active': activeColor === type }]"
           @click="activeColor = type"
         />
       </div>
@@ -43,7 +43,7 @@
         <div
           v-for="type in colorTypes"
           :key="type"
-          :class="['color-button', `color-button__${type}`, { 'color-button__active': activeColor === type }]"
+          :class="['team-button', `team-button__color${type}`, { 'team-button__active': activeColor === type }]"
           @click="activeColor = type"
         />
       </div>
@@ -69,8 +69,8 @@ const isJoinGameMode = ref(false)
 const roomTypes = ref([2, 3, 4, 6, 8])
 const activeType = ref(2)
 const roomId = ref()
-const colorTypes = ref(['GREEN', 'RED', 'BLUE'])
-const activeColor = ref('GREEN')
+const colorTypes = ref([1, 2, 3])
+const activeColor = ref(1)
 
 function createRoom () {
   console.log('emit crate game')
@@ -106,21 +106,21 @@ function joinRoom () {
   width: 300px;
   box-sizing: border-box;
 }
-.color-button {
+.team-button {
   width: 30px;
   height: 30px;
   border: 2px solid #FFFFFF;
   box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.33);
   border-radius: 50%;
-  opacity: 0.5;
+  opacity: 0.25;
 
-  &__GREEN {
+  &__color1 {
     background-color: #2ecc71;
   }
-  &__RED {
+  &__color2 {
     background-color: #e74c3c;
   }
-  &__BLUE {
+  &__color3 {
     background-color: #3498db;
   }
   &__active {
@@ -172,9 +172,6 @@ function joinRoom () {
   display: flex;
   justify-content: center;
   gap: 20px
-}
-.team-button {
-  color: red;
 }
 
 .room-button-wrap {
