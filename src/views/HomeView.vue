@@ -15,7 +15,7 @@
 
     <div v-else class="room-panel">
       <h2>Room ID: {{ roomId }}</h2>
-
+      <button class="success-button" @click="startGame" >Start game</button>
     </div>
   </div>
 </template>
@@ -25,6 +25,7 @@ import { ref, computed } from 'vue'
 import CreateRoomForm from '@/components/CreateRoomForm.vue'
 import SaveIcon from '@/components/icons/SaveIcon.vue'
 import { useGameStore } from '@/stores/game'
+import router from "@/router";
 
 const gameStore = useGameStore()
 const userName = ref(localStorage.getItem('userName') ||
@@ -36,6 +37,12 @@ function saveNickname () {
   isShowSaveButton.value = false
   localStorage.setItem('userName', userName.value)
 }
+
+function startGame () {
+  router.push('/game')
+  console.log('start game')
+}
+
 </script>
 
 <style lang="scss" scoped>
@@ -67,6 +74,10 @@ function saveNickname () {
 
 .save-icon {
   cursor: pointer
+}
+
+.success-button {
+  margin: 15px 0
 }
 
 .fade-enter-active, .fade-leave-active {
